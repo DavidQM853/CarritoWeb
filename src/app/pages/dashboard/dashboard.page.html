@@ -1,0 +1,261 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="flex items-center justify-between px-4 py-2">
+      <div class="flex items-center gap-2">
+        <ion-icon name="hardware-chip-outline" class="text-blue-600 text-2xl"></ion-icon>
+        <span class="font-semibold text-base">Arduino IA</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="flex items-center gap-1 text-xs px-3 py-1 rounded-full font-medium"
+          [class]="connectionBadgeClass">
+          <span class="w-2 h-2 rounded-full" [class]="connectionDotClass"></span>
+          {{ connectionLabel }}
+        </span>
+        <div
+          class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold text-sm">
+          AD</div>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-gray-50">
+
+  <!-- Estado de carga -->
+  <div *ngIf="cargando" class="flex flex-col items-center justify-center h-48 gap-3">
+    <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+    <p class="text-sm text-gray-400">Conectando con la base de datos…</p>
+  </div>
+
+  <!-- Error de conexión -->
+  <div *ngIf="!cargando && error" class="m-4 bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700">
+    <p class="font-semibold mb-1">⚠ Error de conexión</p>
+    <p>{{ error }}</p>
+    <button (click)="cargar()"
+      class="mt-3 text-xs bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1.5 rounded-lg font-medium">
+      Reintentar
+    </button>
+  </div>
+
+  <!-- Contenido principal -->
+  <div *ngIf="!cargando && datos" class="p-4">
+
+    <!-- Encabezado -->
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h1 class="text-lg font-semibold text-gray-800">Dashboard</h1>
+        <p class="text-xs text-gray-400">
+          Última actualización: {{ ultimaActualizacion }} · {{ datos.dispositivo.nombre }}
+        </p>
+      </div>
+      <button (click)="cargar()"
+        class="flex items-center gap-1 text-xs text-gray-500 border border-gray-200 bg-white px-3 py-2 rounded-lg">
+        <ion-icon name="refresh-outline"></ion-icon> Actualizar
+      </button>
+    </div>
+
+    <!-- Tarjetas de métricas -->
+    <div class="grid grid-cols-2 gap-3 mb-4">
+      <!-- Distancia frontal -->
+      <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+        <div class="flex justify-between items-center mb-2">
+          <ion-icon name="radio-outline" class="text-gray-400 text-lg"></ion-icon>
+          <span class="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-medium">EN VIVO</span>
+        </div>
+        <div class="text-2xl font-semibold text-gray-800">{{ distanciaFrontal }}</div>
+        <div class="text-xs text-gray-400 mt-1">Distancia frontal</div>
+        <div *ngIf="sensorFrontalPct > 70" class="text-xs text-amber-600 mt-1">⚠ Obstáculo cercano</div>
+        <div *ngIf="sensorFrontalPct <= 70" class="text-xs text-green-600 mt-1">✓ Camino libre</div>
+      </div>
+
+      <!-- Precisión modelo -->
+      <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+        <div class="flex justify-between items-center mb-2">
+          <ion-icon name="hardware-chip-outline" class="text-gray-400 text-lg"></ion-icon>
+        </div>
+        <div class="text-2xl font-semibold text-gray-800">
+          {{ datos.modelo_ia.precision_acumulada | number:'1.1-1' }}%
+        </div>
+        <div class="text-xs text-gray-400 mt-1">Precisión del modelo</div>
+        <div class="text-xs text-green-600 mt-1">Modelo v{{ datos.modelo_ia.version }}</div>
+      </div>
+
+      <!-- Tiempo de reacción -->
+      <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+        <div class="flex justify-between items-center mb-2">
+          <ion-icon name="time-outline" class="text-gray-400 text-lg"></ion-icon>
+        </div>
+        <div class="text-2xl font-semibold text-gray-800">{{ tiempoReaccion }}</div>
+        <div class="text-xs text-gray-400 mt-1">Tiempo de reacción</div>
+        <div class="text-xs text-gray-400 mt-1">Último movimiento</div>
+      </div>
+
+      <!-- Decisiones en sesión -->
+      <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+        <div class="flex justify-between items-center mb-2">
+          <ion-icon name="navigate-outline" class="text-gray-400 text-lg"></ion-icon>
+        </div>
+        <div class="text-2xl font-semibold text-gray-800">{{ decisiones }}</div>
+        <div class="text-xs text-gray-400 mt-1">Decisiones en sesión</div>
+        <div class="text-xs text-gray-400 mt-1">
+          Sesión {{ datos.sesion_activa ? 'activa #' + datos.sesion_activa.id : 'sin sesión activa' }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Sensores -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="pulse-outline"></ion-icon> Sensores en tiempo real
+      </h2>
+
+      <div *ngIf="datos.ultimo_movimiento; else sinMovimiento" class="space-y-3">
+        <!-- Frontal -->
+        <div class="flex items-center gap-3">
+          <span class="text-xs text-gray-500 w-20">Frontal</span>
+          <div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full rounded-full transition-all duration-500"
+              [class]="sensorFrontalColor"
+              [style.width.%]="sensorFrontalPct"></div>
+          </div>
+          <span class="text-xs font-medium w-12 text-right"
+            [class]="sensorFrontalPct > 70 ? 'text-red-500' : 'text-gray-700'">
+            {{ api.cmAMetros(datos.ultimo_movimiento.sensor_frontal_cm) }}
+          </span>
+        </div>
+        <!-- Izquierda -->
+        <div class="flex items-center gap-3">
+          <span class="text-xs text-gray-500 w-20">Izquierda</span>
+          <div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-green-400 rounded-full transition-all duration-500"
+              [style.width.%]="sensorIzqPct"></div>
+          </div>
+          <span class="text-xs font-medium text-gray-700 w-12 text-right">
+            {{ api.cmAMetros(datos.ultimo_movimiento.sensor_izq_cm) }}
+          </span>
+        </div>
+        <!-- Derecha -->
+        <div class="flex items-center gap-3">
+          <span class="text-xs text-gray-500 w-20">Derecha</span>
+          <div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-green-400 rounded-full transition-all duration-500"
+              [style.width.%]="sensorDerPct"></div>
+          </div>
+          <span class="text-xs font-medium text-gray-700 w-12 text-right">
+            {{ api.cmAMetros(datos.ultimo_movimiento.sensor_der_cm) }}
+          </span>
+        </div>
+      </div>
+
+      <ng-template #sinMovimiento>
+        <p class="text-xs text-gray-400 text-center py-4">Sin datos de sensores aún</p>
+      </ng-template>
+    </div>
+
+    <!-- Última decisión IA -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="bulb-outline"></ion-icon> Última decisión IA
+      </h2>
+
+      <div *ngIf="datos.ultimo_movimiento; else sinDecision">
+        <div class="bg-gray-50 rounded-lg p-3 mb-3">
+          <div class="text-base font-semibold text-gray-800 mb-1">
+            {{ etiquetaUltimaDecision }}
+            <span *ngIf="datos.ultimo_movimiento.angulo_giro > 0">
+              {{ datos.ultimo_movimiento.angulo_giro }}°
+            </span>
+          </div>
+          <div class="text-xs text-gray-400">
+            Sensor frontal: {{ api.cmAMetros(datos.ultimo_movimiento.sensor_frontal_cm) }}
+          </div>
+          <div class="mt-3">
+            <div class="flex justify-between text-xs text-gray-500 mb-1">
+              <span>Confianza</span>
+              <span class="font-semibold text-gray-800">{{ datos.ultimo_movimiento.confianza_pct }}%</span>
+            </div>
+            <div class="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-blue-500 rounded-full"
+                [style.width.%]="datos.ultimo_movimiento.confianza_pct"></div>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-2 flex-wrap">
+          <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
+            val. binario: {{ datos.ultimo_movimiento.valor_binario | number:'1.2-2' }}
+          </span>
+          <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">ejecutada</span>
+          <span class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full">guardada en DB</span>
+        </div>
+      </div>
+
+      <ng-template #sinDecision>
+        <p class="text-xs text-gray-400 text-center py-4">Sin decisiones registradas aún</p>
+      </ng-template>
+    </div>
+
+    <!-- Eventos recientes (alertas) -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="list-outline"></ion-icon> Alertas recientes
+      </h2>
+
+      <div *ngIf="datos.alertas_recientes.length > 0; else sinAlertas" class="space-y-3">
+        <div *ngFor="let alerta of datos.alertas_recientes; let last = last"
+          class="flex items-start gap-3 pb-3"
+          [class.border-b]="!last" [class.border-gray-50]="!last">
+          <div class="w-2 h-2 rounded-full mt-1.5 shrink-0" [class]="colorEvento(alerta.tipo)"></div>
+          <div class="flex-1">
+            <div class="text-xs text-gray-700">{{ alerta.descripcion || alerta.tipo }}</div>
+            <div class="text-xs text-gray-400">{{ api.tiempoRelativo(alerta.momento) }}</div>
+          </div>
+          <span class="text-xs px-2 py-0.5 rounded-full" [class]="badgeEvento(alerta.tipo)">
+            {{ etiquetaAlerta(alerta.tipo) }}
+          </span>
+        </div>
+      </div>
+
+      <ng-template #sinAlertas>
+        <p class="text-xs text-gray-400 text-center py-4">Sin alertas registradas</p>
+      </ng-template>
+    </div>
+
+    <!-- Dispositivo -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="desktop-outline"></ion-icon> Dispositivo
+      </h2>
+      <div class="flex items-center gap-3 mb-3 pb-3 border-b border-gray-50">
+        <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+          <ion-icon name="hardware-chip-outline" class="text-blue-600"></ion-icon>
+        </div>
+        <div class="flex-1">
+          <div class="text-sm font-medium text-gray-800">{{ datos.dispositivo.nombre }}</div>
+          <div class="text-xs text-gray-400">MAC: {{ datos.dispositivo.mac_address }}</div>
+        </div>
+        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">activo</span>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="bg-gray-50 rounded-lg p-3">
+          <div class="text-xs text-gray-400">Firmware</div>
+          <div class="text-sm font-semibold text-gray-800 mt-1">v{{ datos.dispositivo.version_firmware }}</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3">
+          <div class="text-xs text-gray-400">Modelo IA</div>
+          <div class="text-sm font-semibold text-gray-800 mt-1">v{{ datos.modelo_ia.version }}</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3">
+          <div class="text-xs text-gray-400">Sesiones totales</div>
+          <div class="text-sm font-semibold text-gray-800 mt-1">{{ datos.totales.total_sesiones }}</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3">
+          <div class="text-xs text-gray-400">Distancia total</div>
+          <div class="text-sm font-semibold text-gray-800 mt-1">
+            {{ api.cmAMetros(datos.totales.distancia_total_cm || 0) }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

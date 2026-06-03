@@ -1,0 +1,178 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Análisis</ion-title>
+    <ion-buttons slot="end">
+      <button (click)="cargar()" class="mr-2 p-2 text-gray-500">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-gray-50">
+
+  <!-- Cargando -->
+  <div *ngIf="cargando" class="flex flex-col items-center justify-center h-48 gap-3">
+    <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+    <p class="text-sm text-gray-400">Cargando análisis…</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!cargando && error" class="m-4 bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700">
+    <p class="font-semibold mb-1">⚠ Error de conexión</p>
+    <p>{{ error }}</p>
+    <button (click)="cargar()"
+      class="mt-3 text-xs bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1.5 rounded-lg font-medium">
+      Reintentar
+    </button>
+  </div>
+
+  <!-- Contenido -->
+  <div *ngIf="!cargando && datos" class="p-4">
+
+    <!-- Precisión general -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="analytics-outline"></ion-icon> Precisión del modelo IA
+      </h2>
+      <div class="flex items-end gap-4 mb-3">
+        <div class="text-4xl font-semibold text-gray-800">
+          {{ datos.modelo_ia.precision_acumulada | number:'1.1-1' }}%
+        </div>
+        <div class="text-xs text-green-600 mb-1">Modelo v{{ datos.modelo_ia.version }}</div>
+      </div>
+      <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div class="h-full bg-blue-500 rounded-full transition-all duration-700"
+          [style.width.%]="datos.modelo_ia.precision_acumulada || 0"></div>
+      </div>
+      <div class="flex justify-between text-xs text-gray-400 mt-1">
+        <span>0%</span><span>100%</span>
+      </div>
+    </div>
+
+    <!-- Tarjetas métricas -->
+    <div class="grid grid-cols-2 gap-3 mb-4">
+      <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+        <ion-icon name="checkmark-circle-outline" class="text-green-500 text-xl"></ion-icon>
+        <div class="text-2xl font-semibold text-gray-800 mt-1">
+          {{ decisionesCorrectas | number }}
+        </div>
+        <div class="text-xs text-gray-400">Decisiones correctas</div>
+      </div>
+      <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+        <ion-icon name="close-circle-outline" class="text-red-400 text-xl"></ion-icon>
+        <div class="text-2xl font-semibold text-gray-800 mt-1">
+          {{ decisionesIncorrectas | number }}
+        </div>
+        <div class="text-xs text-gray-400">Decisiones incorrectas</div>
+      </div>
+      <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+        <ion-icon name="time-outline" class="text-blue-400 text-xl"></ion-icon>
+        <div class="text-2xl font-semibold text-gray-800 mt-1">
+          {{ datos.estadisticas_reaccion ? (datos.estadisticas_reaccion.promedio_ms ?? '—') : '—' }}
+          <span *ngIf="datos.estadisticas_reaccion?.promedio_ms" class="text-sm font-normal">ms</span>
+        </div>
+        <div class="text-xs text-gray-400">Tiempo reacción prom.</div>
+      </div>
+      <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+        <ion-icon name="flash-outline" class="text-amber-400 text-xl"></ion-icon>
+        <div class="text-2xl font-semibold text-gray-800 mt-1">
+          {{ datos.estadisticas_reaccion ? (datos.estadisticas_reaccion.minimo_ms ?? '—') : '—' }}
+          <span *ngIf="datos.estadisticas_reaccion?.minimo_ms" class="text-sm font-normal">ms</span>
+        </div>
+        <div class="text-xs text-gray-400">Tiempo mínimo</div>
+      </div>
+    </div>
+
+    <!-- Distribución de decisiones por tipo -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="pie-chart-outline"></ion-icon> Decisiones por tipo
+      </h2>
+
+      <div *ngIf="datos.distribucion_decisiones.length > 0; else sinDecisiones" class="space-y-3">
+        <div *ngFor="let d of datos.distribucion_decisiones">
+          <div class="flex justify-between text-xs text-gray-500 mb-1">
+            <span>{{ api.etiquetaDecision(d.decision) }}</span>
+            <span class="font-medium text-gray-700">
+              {{ porcentaje(d.total) }}%
+              <span class="text-gray-400 font-normal">({{ d.total }})</span>
+            </span>
+          </div>
+          <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full rounded-full transition-all duration-500"
+              [class]="colorDecision(d.decision)"
+              [style.width.%]="porcentaje(d.total)"></div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #sinDecisiones>
+        <p class="text-xs text-gray-400 text-center py-4">Sin movimientos registrados aún</p>
+      </ng-template>
+    </div>
+
+    <!-- Gráfico de precisión por sesión -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="trending-up-outline"></ion-icon> Aprendizaje por sesión
+      </h2>
+
+      <div *ngIf="datos.tendencia_precision.length > 0; else sinTendencia">
+        <div class="flex items-end gap-1 h-24">
+          <div *ngFor="let s of datos.tendencia_precision"
+            class="flex-1 rounded-t transition-all duration-500 cursor-default"
+            [class]="colorBarra(s.precision_pct)"
+            [style.height.%]="alturaBarraSession(s.precision_pct)"
+            [title]="'Sesión #' + s.id + ' — ' + s.precision_pct + '%'">
+          </div>
+        </div>
+        <div class="flex justify-between text-xs text-gray-400 mt-1">
+          <span>Ses. #{{ datos.tendencia_precision[0].id }}</span>
+          <span>Ses. #{{ datos.tendencia_precision[datos.tendencia_precision.length - 1].id }}</span>
+        </div>
+      </div>
+
+      <ng-template #sinTendencia>
+        <p class="text-xs text-gray-400 text-center py-8">
+          Sin suficientes sesiones para mostrar tendencia
+        </p>
+      </ng-template>
+    </div>
+
+    <!-- Info del modelo IA -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="hardware-chip-outline"></ion-icon> Modelo IA
+      </h2>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="bg-gray-50 rounded-lg p-3">
+          <div class="text-xs text-gray-400">Versión actual</div>
+          <div class="text-sm font-semibold text-gray-800 mt-1">v{{ datos.modelo_ia.version }}</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3">
+          <div class="text-xs text-gray-400">Total decisiones</div>
+          <div class="text-sm font-semibold text-gray-800 mt-1">
+            {{ datos.modelo_ia.total_decisiones | number }}
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3">
+          <div class="text-xs text-gray-400">Precisión acumulada</div>
+          <div class="text-sm font-semibold text-gray-800 mt-1">
+            {{ datos.modelo_ia.precision_acumulada | number:'1.1-1' }}%
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3">
+          <div class="text-xs text-gray-400">Última actualización</div>
+          <div class="text-sm font-semibold text-gray-800 mt-1">
+            {{ api.tiempoRelativo(datos.modelo_ia.actualizado_en || '') }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

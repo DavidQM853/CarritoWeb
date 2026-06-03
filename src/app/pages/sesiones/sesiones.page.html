@@ -1,0 +1,146 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Sesiones</ion-title>
+    <ion-buttons slot="end">
+      <button (click)="cargar()" class="mr-2 p-2 text-gray-500">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-gray-50">
+
+  <!-- Cargando -->
+  <div *ngIf="cargando" class="flex flex-col items-center justify-center h-48 gap-3">
+    <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+    <p class="text-sm text-gray-400">Cargando sesiones…</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!cargando && error" class="m-4 bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700">
+    <p class="font-semibold mb-1">⚠ Error de conexión</p>
+    <p>{{ error }}</p>
+    <button (click)="cargar()"
+      class="mt-3 text-xs bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1.5 rounded-lg font-medium">
+      Reintentar
+    </button>
+  </div>
+
+  <!-- Contenido -->
+  <div *ngIf="!cargando && datos" class="p-4">
+
+    <!-- Resumen -->
+    <div class="grid grid-cols-3 gap-3 mb-4">
+      <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm text-center">
+        <div class="text-2xl font-semibold text-gray-800">{{ datos.resumen.total_sesiones }}</div>
+        <div class="text-xs text-gray-400 mt-1">Total sesiones</div>
+      </div>
+      <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm text-center">
+        <div class="text-2xl font-semibold text-gray-800">
+          {{ api.cmAMetros(datos.resumen.distancia_total_cm) }}
+        </div>
+        <div class="text-xs text-gray-400 mt-1">Distancia total</div>
+      </div>
+      <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm text-center">
+        <div class="text-2xl font-semibold text-gray-800">
+          {{ datos.resumen.precision_promedio | number:'1.1-1' }}%
+        </div>
+        <div class="text-xs text-gray-400 mt-1">Precisión prom.</div>
+      </div>
+    </div>
+
+    <!-- Sesión activa -->
+    <div *ngIf="datos.sesion_activa" class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="text-sm font-semibold text-blue-700 flex items-center gap-2">
+          <ion-icon name="radio-outline"></ion-icon> Sesión activa #{{ datos.sesion_activa.id }}
+        </h2>
+        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium flex items-center gap-1">
+          <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span> En curso
+        </span>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="bg-white rounded-lg p-2">
+          <div class="text-xs text-gray-400">Inicio</div>
+          <div class="text-sm font-medium text-gray-800">{{ horaSesion(datos.sesion_activa.inicio) }}</div>
+        </div>
+        <div class="bg-white rounded-lg p-2">
+          <div class="text-xs text-gray-400">Duración</div>
+          <div class="text-sm font-medium text-gray-800">{{ duracionSesion(datos.sesion_activa) }}</div>
+        </div>
+        <div class="bg-white rounded-lg p-2">
+          <div class="text-xs text-gray-400">Distancia</div>
+          <div class="text-sm font-medium text-gray-800">
+            {{ api.cmAMetros(datos.sesion_activa.distancia_total_cm) }}
+          </div>
+        </div>
+        <div class="bg-white rounded-lg p-2">
+          <div class="text-xs text-gray-400">Decisiones</div>
+          <div class="text-sm font-medium text-gray-800">{{ datos.sesion_activa.decisiones_tomadas }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sin sesión activa -->
+    <div *ngIf="!datos.sesion_activa" class="bg-gray-100 border border-gray-200 rounded-xl p-4 mb-4 text-center">
+      <p class="text-sm text-gray-500">No hay ninguna sesión activa en este momento</p>
+    </div>
+
+    <!-- Historial de sesiones -->
+    <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+      <div class="px-4 py-3 border-b border-gray-50">
+        <h2 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+          <ion-icon name="time-outline"></ion-icon> Historial de sesiones
+        </h2>
+      </div>
+
+      <!-- Sin historial -->
+      <div *ngIf="sesionesHistoricas.length === 0" class="px-4 py-8 text-center">
+        <p class="text-sm text-gray-400">No hay sesiones completadas</p>
+      </div>
+
+      <!-- Lista de sesiones -->
+      <div *ngFor="let sesion of sesionesHistoricas; let last = last"
+        class="px-4 py-3"
+        [class.border-b]="!last"
+        [class.border-gray-50]="!last">
+
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-sm font-medium text-gray-800">Sesión #{{ sesion.id }}</span>
+          <span class="text-xs px-2 py-0.5 rounded-full" [class]="estadoSesion(sesion).clase">
+            {{ estadoSesion(sesion).texto }}
+          </span>
+        </div>
+
+        <div class="flex gap-4 text-xs text-gray-400 mb-2">
+          <span>{{ fechaSesion(sesion.inicio) }}</span>
+          <span>{{ horaSesion(sesion.inicio) }}
+            <ng-container *ngIf="sesion.fin"> – {{ horaSesion(sesion.fin) }}</ng-container>
+          </span>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2">
+          <div class="text-center">
+            <div class="text-sm font-semibold text-gray-700">{{ api.cmAMetros(sesion.distancia_total_cm) }}</div>
+            <div class="text-xs text-gray-400">Distancia</div>
+          </div>
+          <div class="text-center">
+            <div class="text-sm font-semibold text-gray-700">{{ sesion.decisiones_tomadas }}</div>
+            <div class="text-xs text-gray-400">Decisiones</div>
+          </div>
+          <div class="text-center">
+            <div class="text-sm font-semibold" [class]="colorPrecision(sesion.precision_pct)">
+              {{ sesion.precision_pct !== null ? (sesion.precision_pct | number:'1.1-1') + '%' : '—' }}
+            </div>
+            <div class="text-xs text-gray-400">Precisión</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

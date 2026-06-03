@@ -1,0 +1,252 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Base de datos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-gray-50">
+  <div class="p-4">
+
+    <!-- Estado de la DB -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+          <ion-icon name="server-outline"></ion-icon> Estado de la base de datos
+        </h2>
+        <span class="flex items-center gap-1 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
+          <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Conectada
+        </span>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="bg-gray-50 rounded-lg p-3">
+          <div class="text-xs text-gray-400">Motor</div>
+          <div class="text-sm font-semibold text-gray-800 mt-1">SQLite</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3">
+          <div class="text-xs text-gray-400">Tamaño</div>
+          <div class="text-sm font-semibold text-gray-800 mt-1">14.8 MB</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3">
+          <div class="text-xs text-gray-400">Último respaldo</div>
+          <div class="text-sm font-semibold text-gray-800 mt-1">hace 1h</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3">
+          <div class="text-xs text-gray-400">Registros totales</div>
+          <div class="text-sm font-semibold text-gray-800 mt-1">15,847</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tablas -->
+    <div class="bg-white rounded-xl border border-gray-100 shadow-sm mb-4 overflow-hidden">
+      <div class="px-4 py-3 border-b border-gray-50">
+        <h2 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+          <ion-icon name="grid-outline"></ion-icon> Tablas
+        </h2>
+      </div>
+
+      <!-- Tabla: sesiones -->
+      <div class="px-4 py-3 border-b border-gray-50">
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center">
+              <ion-icon name="time-outline" class="text-blue-600 text-sm"></ion-icon>
+            </div>
+            <span class="text-sm font-medium text-gray-800">sesiones</span>
+          </div>
+          <span class="text-xs text-gray-400">128 registros</span>
+        </div>
+        <div class="flex gap-1.5 ml-9 mt-1">
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">id</span>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">inicio</span>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">fin</span>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">distancia</span>
+        </div>
+      </div>
+
+      <!-- Tabla: decisiones -->
+      <div class="px-4 py-3 border-b border-gray-50">
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-green-100 flex items-center justify-center">
+              <ion-icon name="bulb-outline" class="text-green-600 text-sm"></ion-icon>
+            </div>
+            <span class="text-sm font-medium text-gray-800">decisiones</span>
+          </div>
+          <span class="text-xs text-gray-400">12,403 registros</span>
+        </div>
+        <div class="flex gap-1.5 ml-9 mt-1 flex-wrap">
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">id</span>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">sesion_id</span>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">accion</span>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">confianza</span>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">timestamp</span>
+        </div>
+      </div>
+
+      <!-- Tabla: sensores -->
+      <div class="px-4 py-3 border-b border-gray-50">
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-amber-100 flex items-center justify-center">
+              <ion-icon name="pulse-outline" class="text-amber-600 text-sm"></ion-icon>
+            </div>
+            <span class="text-sm font-medium text-gray-800">lecturas_sensores</span>
+          </div>
+          <span class="text-xs text-gray-400">2,894 registros</span>
+        </div>
+        <div class="flex gap-1.5 ml-9 mt-1 flex-wrap">
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">id</span>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">frontal</span>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">izquierda</span>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">derecha</span>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">timestamp</span>
+        </div>
+      </div>
+
+      <!-- Tabla: eventos -->
+      <div class="px-4 py-3">
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-red-100 flex items-center justify-center">
+              <ion-icon name="warning-outline" class="text-red-500 text-sm"></ion-icon>
+            </div>
+            <span class="text-sm font-medium text-gray-800">eventos</span>
+          </div>
+          <span class="text-xs text-gray-400">422 registros</span>
+        </div>
+        <div class="flex gap-1.5 ml-9 mt-1 flex-wrap">
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">id</span>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">tipo</span>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">descripcion</span>
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">sesion_id</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Últimos registros -->
+    <div class="bg-white rounded-xl border border-gray-100 shadow-sm mb-4 overflow-hidden">
+      <div class="px-4 py-3 border-b border-gray-50 flex items-center justify-between">
+        <h2 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+          <ion-icon name="document-text-outline"></ion-icon> Últimos registros — decisiones
+        </h2>
+      </div>
+
+      <!-- Header tabla -->
+      <div class="grid grid-cols-4 gap-2 px-4 py-2 bg-gray-50 border-b border-gray-100">
+        <span class="text-xs font-medium text-gray-500">ID</span>
+        <span class="text-xs font-medium text-gray-500">Acción</span>
+        <span class="text-xs font-medium text-gray-500">Confianza</span>
+        <span class="text-xs font-medium text-gray-500">Hora</span>
+      </div>
+
+      <div class="grid grid-cols-4 gap-2 px-4 py-2.5 border-b border-gray-50 items-center">
+        <span class="text-xs text-gray-600 font-mono">#12403</span>
+        <span class="text-xs text-gray-800">Girar izq.</span>
+        <div class="flex items-center gap-1">
+          <div class="h-1.5 w-12 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-blue-500 rounded-full" style="width:91%"></div>
+          </div>
+          <span class="text-xs text-gray-600">91%</span>
+        </div>
+        <span class="text-xs text-gray-400">13:00:02</span>
+      </div>
+
+      <div class="grid grid-cols-4 gap-2 px-4 py-2.5 border-b border-gray-50 items-center">
+        <span class="text-xs text-gray-600 font-mono">#12402</span>
+        <span class="text-xs text-gray-800">Avanzar</span>
+        <div class="flex items-center gap-1">
+          <div class="h-1.5 w-12 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-green-500 rounded-full" style="width:95%"></div>
+          </div>
+          <span class="text-xs text-gray-600">95%</span>
+        </div>
+        <span class="text-xs text-gray-400">12:59:59</span>
+      </div>
+
+      <div class="grid grid-cols-4 gap-2 px-4 py-2.5 border-b border-gray-50 items-center">
+        <span class="text-xs text-gray-600 font-mono">#12401</span>
+        <span class="text-xs text-gray-800">Detenerse</span>
+        <div class="flex items-center gap-1">
+          <div class="h-1.5 w-12 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-red-400 rounded-full" style="width:99%"></div>
+          </div>
+          <span class="text-xs text-gray-600">99%</span>
+        </div>
+        <span class="text-xs text-gray-400">12:59:34</span>
+      </div>
+
+      <div class="grid grid-cols-4 gap-2 px-4 py-2.5 border-b border-gray-50 items-center">
+        <span class="text-xs text-gray-600 font-mono">#12400</span>
+        <span class="text-xs text-gray-800">Girar der.</span>
+        <div class="flex items-center gap-1">
+          <div class="h-1.5 w-12 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-blue-500 rounded-full" style="width:88%"></div>
+          </div>
+          <span class="text-xs text-gray-600">88%</span>
+        </div>
+        <span class="text-xs text-gray-400">12:54:30</span>
+      </div>
+
+      <div class="grid grid-cols-4 gap-2 px-4 py-2.5 items-center">
+        <span class="text-xs text-gray-600 font-mono">#12399</span>
+        <span class="text-xs text-gray-800">Avanzar</span>
+        <div class="flex items-center gap-1">
+          <div class="h-1.5 w-12 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-green-500 rounded-full" style="width:93%"></div>
+          </div>
+          <span class="text-xs text-gray-600">93%</span>
+        </div>
+        <span class="text-xs text-gray-400">12:53:15</span>
+      </div>
+    </div>
+
+    <!-- Almacenamiento -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="pie-chart-outline"></ion-icon> Uso de almacenamiento
+      </h2>
+      <div class="flex items-center gap-3 mb-3">
+        <div class="flex-1">
+          <div class="flex justify-between text-xs text-gray-500 mb-1">
+            <span>Usado</span>
+            <span class="font-medium text-gray-700">14.8 MB / 100 MB</span>
+          </div>
+          <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-blue-500 rounded-full" style="width:14.8%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <span class="flex items-center gap-1.5 text-gray-500">
+            <span class="w-2 h-2 bg-green-500 rounded-full"></span> Decisiones
+          </span>
+          <span class="font-medium text-gray-700">9.2 MB</span>
+        </div>
+        <div class="flex items-center justify-between text-xs">
+          <span class="flex items-center gap-1.5 text-gray-500">
+            <span class="w-2 h-2 bg-amber-500 rounded-full"></span> Lecturas sensores
+          </span>
+          <span class="font-medium text-gray-700">3.1 MB</span>
+        </div>
+        <div class="flex items-center justify-between text-xs">
+          <span class="flex items-center gap-1.5 text-gray-500">
+            <span class="w-2 h-2 bg-blue-500 rounded-full"></span> Sesiones
+          </span>
+          <span class="font-medium text-gray-700">1.8 MB</span>
+        </div>
+        <div class="flex items-center justify-between text-xs">
+          <span class="flex items-center gap-1.5 text-gray-500">
+            <span class="w-2 h-2 bg-red-500 rounded-full"></span> Eventos
+          </span>
+          <span class="font-medium text-gray-700">0.7 MB</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

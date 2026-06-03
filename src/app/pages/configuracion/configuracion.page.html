@@ -1,0 +1,298 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Configuración</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-gray-50">
+  <div class="p-4">
+
+    <!-- Dispositivo -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="hardware-chip-outline"></ion-icon> Dispositivo
+      </h2>
+      <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-50">
+        <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
+          <ion-icon name="hardware-chip-outline" class="text-blue-600 text-xl"></ion-icon>
+        </div>
+        <div class="flex-1">
+          <div class="text-sm font-medium text-gray-800">Arduino #1</div>
+          <div class="text-xs text-gray-400">MAC: AA:BB:CC:DD:EE:01</div>
+        </div>
+        <span class="flex items-center gap-1 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
+          <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Activo
+        </span>
+      </div>
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Nombre del dispositivo</div>
+            <div class="text-xs text-gray-400">Identificador personalizado</div>
+          </div>
+          <div class="bg-gray-50 rounded-lg px-3 py-1.5 text-sm text-gray-800 border border-gray-200">Arduino #1</div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Puerto serial</div>
+            <div class="text-xs text-gray-400">Conexión con el dispositivo</div>
+          </div>
+          <div class="bg-gray-50 rounded-lg px-3 py-1.5 text-sm text-gray-800 border border-gray-200">COM3</div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Baud rate</div>
+            <div class="text-xs text-gray-400">Velocidad de comunicación</div>
+          </div>
+          <div class="bg-gray-50 rounded-lg px-3 py-1.5 text-sm text-gray-800 border border-gray-200">9600</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sensores -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="pulse-outline"></ion-icon> Sensores
+      </h2>
+      <div class="space-y-3">
+        <div class="flex items-center justify-between py-2 border-b border-gray-50">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+              <ion-icon name="radio-outline" class="text-blue-600 text-sm"></ion-icon>
+            </div>
+            <div>
+              <div class="text-sm text-gray-700">Sensor frontal</div>
+              <div class="text-xs text-gray-400">HC-SR04 · Ultrasónico</div>
+            </div>
+          </div>
+          <div class="w-10 h-6 bg-green-500 rounded-full relative">
+            <div class="w-4 h-4 bg-white rounded-full absolute right-1 top-1 shadow-sm"></div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between py-2 border-b border-gray-50">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center">
+              <ion-icon name="radio-outline" class="text-green-600 text-sm"></ion-icon>
+            </div>
+            <div>
+              <div class="text-sm text-gray-700">Sensor izquierdo</div>
+              <div class="text-xs text-gray-400">HC-SR04 · Ultrasónico</div>
+            </div>
+          </div>
+          <div class="w-10 h-6 bg-green-500 rounded-full relative">
+            <div class="w-4 h-4 bg-white rounded-full absolute right-1 top-1 shadow-sm"></div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between py-2">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
+              <ion-icon name="radio-outline" class="text-amber-600 text-sm"></ion-icon>
+            </div>
+            <div>
+              <div class="text-sm text-gray-700">Sensor derecho</div>
+              <div class="text-xs text-gray-400">HC-SR04 · Ultrasónico</div>
+            </div>
+          </div>
+          <div class="w-10 h-6 bg-green-500 rounded-full relative">
+            <div class="w-4 h-4 bg-white rounded-full absolute right-1 top-1 shadow-sm"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modelo IA -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="bulb-outline"></ion-icon> Modelo IA
+      </h2>
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Versión del modelo</div>
+            <div class="text-xs text-gray-400">Modelo de decisión actual</div>
+          </div>
+          <span class="text-xs bg-blue-100 text-blue-600 px-3 py-1 rounded-full font-medium">v1.4</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Umbral de confianza</div>
+            <div class="text-xs text-gray-400">Mínimo para ejecutar decisión</div>
+          </div>
+          <div class="bg-gray-50 rounded-lg px-3 py-1.5 text-sm text-gray-800 border border-gray-200">70%</div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Distancia de emergencia</div>
+            <div class="text-xs text-gray-400">Detención automática</div>
+          </div>
+          <div class="bg-gray-50 rounded-lg px-3 py-1.5 text-sm text-gray-800 border border-gray-200">0.15m</div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Aprendizaje automático</div>
+            <div class="text-xs text-gray-400">Actualizar modelo en tiempo real</div>
+          </div>
+          <div class="w-10 h-6 bg-green-500 rounded-full relative">
+            <div class="w-4 h-4 bg-white rounded-full absolute right-1 top-1 shadow-sm"></div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Modo de exploración</div>
+            <div class="text-xs text-gray-400">Rutas aleatorias para aprendizaje</div>
+          </div>
+          <div class="w-10 h-6 bg-gray-300 rounded-full relative">
+            <div class="w-4 h-4 bg-white rounded-full absolute left-1 top-1 shadow-sm"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Base de datos -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="server-outline"></ion-icon> Base de datos
+      </h2>
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Guardado automático</div>
+            <div class="text-xs text-gray-400">Guardar decisiones automáticamente</div>
+          </div>
+          <div class="w-10 h-6 bg-green-500 rounded-full relative">
+            <div class="w-4 h-4 bg-white rounded-full absolute right-1 top-1 shadow-sm"></div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Intervalo de respaldo</div>
+            <div class="text-xs text-gray-400">Frecuencia de backup automático</div>
+          </div>
+          <div class="bg-gray-50 rounded-lg px-3 py-1.5 text-sm text-gray-800 border border-gray-200">1 hora</div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Registrar sensores</div>
+            <div class="text-xs text-gray-400">Guardar cada lectura de sensor</div>
+          </div>
+          <div class="w-10 h-6 bg-green-500 rounded-full relative">
+            <div class="w-4 h-4 bg-white rounded-full absolute right-1 top-1 shadow-sm"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notificaciones -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="notifications-outline"></ion-icon> Notificaciones
+      </h2>
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Alertas de colisión</div>
+            <div class="text-xs text-gray-400">Notificar colisiones evitadas</div>
+          </div>
+          <div class="w-10 h-6 bg-green-500 rounded-full relative">
+            <div class="w-4 h-4 bg-white rounded-full absolute right-1 top-1 shadow-sm"></div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Batería baja</div>
+            <div class="text-xs text-gray-400">Alerta cuando batería &lt; 20%</div>
+          </div>
+          <div class="w-10 h-6 bg-green-500 rounded-full relative">
+            <div class="w-4 h-4 bg-white rounded-full absolute right-1 top-1 shadow-sm"></div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Desconexión</div>
+            <div class="text-xs text-gray-400">Alerta si el dispositivo se desconecta</div>
+          </div>
+          <div class="w-10 h-6 bg-green-500 rounded-full relative">
+            <div class="w-4 h-4 bg-white rounded-full absolute right-1 top-1 shadow-sm"></div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm text-gray-700">Sonido</div>
+            <div class="text-xs text-gray-400">Sonido en notificaciones</div>
+          </div>
+          <div class="w-10 h-6 bg-gray-300 rounded-full relative">
+            <div class="w-4 h-4 bg-white rounded-full absolute left-1 top-1 shadow-sm"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="build-outline"></ion-icon> Acciones
+      </h2>
+      <div class="space-y-2">
+        <button class="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-xl text-left hover:bg-gray-100 transition-colors">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+            <ion-icon name="refresh-outline" class="text-blue-600 text-sm"></ion-icon>
+          </div>
+          <div class="flex-1">
+            <div class="text-sm text-gray-700">Reiniciar modelo IA</div>
+            <div class="text-xs text-gray-400">Volver al modelo base v1.0</div>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="text-gray-300"></ion-icon>
+        </button>
+        <button class="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-xl text-left hover:bg-gray-100 transition-colors">
+          <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
+            <ion-icon name="download-outline" class="text-amber-600 text-sm"></ion-icon>
+          </div>
+          <div class="flex-1">
+            <div class="text-sm text-gray-700">Exportar datos</div>
+            <div class="text-xs text-gray-400">Descargar base de datos como CSV</div>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="text-gray-300"></ion-icon>
+        </button>
+        <button class="w-full flex items-center gap-3 px-4 py-3 bg-red-50 rounded-xl text-left hover:bg-red-100 transition-colors">
+          <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center">
+            <ion-icon name="trash-outline" class="text-red-500 text-sm"></ion-icon>
+          </div>
+          <div class="flex-1">
+            <div class="text-sm text-red-600">Limpiar base de datos</div>
+            <div class="text-xs text-red-400">Eliminar todos los registros</div>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="text-red-300"></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Info app -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="information-circle-outline"></ion-icon> Acerca de
+      </h2>
+      <div class="space-y-2 text-xs">
+        <div class="flex justify-between text-gray-500">
+          <span>Versión de la app</span>
+          <span class="font-medium text-gray-700">1.0.0</span>
+        </div>
+        <div class="flex justify-between text-gray-500">
+          <span>Framework</span>
+          <span class="font-medium text-gray-700">Ionic + Angular</span>
+        </div>
+        <div class="flex justify-between text-gray-500">
+          <span>Firmware Arduino</span>
+          <span class="font-medium text-gray-700">v1.4</span>
+        </div>
+        <div class="flex justify-between text-gray-500">
+          <span>Modelo IA</span>
+          <span class="font-medium text-gray-700">v1.4</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

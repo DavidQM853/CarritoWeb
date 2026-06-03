@@ -1,0 +1,262 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Log de eventos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-gray-50">
+  <div class="p-4">
+
+    <!-- Resumen -->
+    <div class="grid grid-cols-3 gap-3 mb-4">
+      <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm text-center">
+        <div class="text-2xl font-semibold text-gray-800">342</div>
+        <div class="text-xs text-gray-400 mt-1">Total eventos</div>
+      </div>
+      <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm text-center">
+        <div class="text-2xl font-semibold text-red-500">12</div>
+        <div class="text-xs text-gray-400 mt-1">Alertas</div>
+      </div>
+      <div class="bg-white rounded-xl p-3 border border-gray-100 shadow-sm text-center">
+        <div class="text-2xl font-semibold text-green-600">98%</div>
+        <div class="text-xs text-gray-400 mt-1">Sin errores</div>
+      </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="flex gap-2 mb-4 overflow-x-auto pb-1">
+      <button class="text-xs px-3 py-1.5 rounded-full font-medium bg-blue-600 text-white shrink-0">
+        Todos
+      </button>
+      <button class="text-xs px-3 py-1.5 rounded-full font-medium bg-white text-gray-500 border border-gray-200 shrink-0">
+        <span class="inline-block w-1.5 h-1.5 bg-blue-400 rounded-full mr-1"></span> Movimiento
+      </button>
+      <button class="text-xs px-3 py-1.5 rounded-full font-medium bg-white text-gray-500 border border-gray-200 shrink-0">
+        <span class="inline-block w-1.5 h-1.5 bg-red-400 rounded-full mr-1"></span> Alertas
+      </button>
+      <button class="text-xs px-3 py-1.5 rounded-full font-medium bg-white text-gray-500 border border-gray-200 shrink-0">
+        <span class="inline-block w-1.5 h-1.5 bg-amber-400 rounded-full mr-1"></span> Sistema
+      </button>
+      <button class="text-xs px-3 py-1.5 rounded-full font-medium bg-white text-gray-500 border border-gray-200 shrink-0">
+        <span class="inline-block w-1.5 h-1.5 bg-purple-400 rounded-full mr-1"></span> IA
+      </button>
+    </div>
+
+    <!-- Timeline de eventos -->
+    <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+      <div class="px-4 py-3 border-b border-gray-50 flex items-center justify-between">
+        <h2 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+          <ion-icon name="reader-outline"></ion-icon> Eventos recientes
+        </h2>
+        <span class="text-xs text-gray-400">Sesión #128</span>
+      </div>
+
+      <!-- Grupo: Hoy -->
+      <div class="px-4 py-2 bg-gray-50 border-b border-gray-100">
+        <span class="text-xs font-medium text-gray-500">Hoy — 27 May 2026</span>
+      </div>
+
+      <!-- Evento 1 -->
+      <div class="px-4 py-3 border-b border-gray-50 flex gap-3">
+        <div class="flex flex-col items-center">
+          <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+            <ion-icon name="navigate-outline" class="text-blue-600 text-sm"></ion-icon>
+          </div>
+          <div class="w-0.5 flex-1 bg-gray-100 mt-1"></div>
+        </div>
+        <div class="flex-1 pb-1">
+          <div class="flex items-center justify-between mb-0.5">
+            <span class="text-sm font-medium text-gray-800">Giro 15° izquierda</span>
+            <span class="text-xs text-gray-400">13:00:02</span>
+          </div>
+          <div class="text-xs text-gray-400 mb-1.5">Obstáculo frontal detectado a 0.8m</div>
+          <div class="flex gap-1.5">
+            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">movimiento</span>
+            <span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded-full">confianza: 91%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evento 2 -->
+      <div class="px-4 py-3 border-b border-gray-50 flex gap-3">
+        <div class="flex flex-col items-center">
+          <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+            <ion-icon name="arrow-forward-outline" class="text-green-600 text-sm"></ion-icon>
+          </div>
+          <div class="w-0.5 flex-1 bg-gray-100 mt-1"></div>
+        </div>
+        <div class="flex-1 pb-1">
+          <div class="flex items-center justify-between mb-0.5">
+            <span class="text-sm font-medium text-gray-800">Avanzar 30cm</span>
+            <span class="text-xs text-gray-400">12:59:59</span>
+          </div>
+          <div class="text-xs text-gray-400 mb-1.5">Camino libre detectado por sensores</div>
+          <div class="flex gap-1.5">
+            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">movimiento</span>
+            <span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded-full">confianza: 95%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evento 3 - Alerta -->
+      <div class="px-4 py-3 border-b border-gray-50 flex gap-3">
+        <div class="flex flex-col items-center">
+          <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+            <ion-icon name="warning-outline" class="text-red-500 text-sm"></ion-icon>
+          </div>
+          <div class="w-0.5 flex-1 bg-gray-100 mt-1"></div>
+        </div>
+        <div class="flex-1 pb-1">
+          <div class="flex items-center justify-between mb-0.5">
+            <span class="text-sm font-medium text-red-600">Colisión evitada</span>
+            <span class="text-xs text-gray-400">12:59:34</span>
+          </div>
+          <div class="text-xs text-gray-400 mb-1.5">Detención de emergencia — objeto a 0.15m</div>
+          <div class="flex gap-1.5">
+            <span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">alerta</span>
+            <span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">crítico</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evento 4 - Sistema -->
+      <div class="px-4 py-3 border-b border-gray-50 flex gap-3">
+        <div class="flex flex-col items-center">
+          <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center shrink-0">
+            <ion-icon name="refresh-outline" class="text-amber-600 text-sm"></ion-icon>
+          </div>
+          <div class="w-0.5 flex-1 bg-gray-100 mt-1"></div>
+        </div>
+        <div class="flex-1 pb-1">
+          <div class="flex items-center justify-between mb-0.5">
+            <span class="text-sm font-medium text-gray-800">Modelo actualizado</span>
+            <span class="text-xs text-gray-400">12:57:12</span>
+          </div>
+          <div class="text-xs text-gray-400 mb-1.5">Versión del modelo IA actualizada de v1.3 a v1.4</div>
+          <div class="flex gap-1.5">
+            <span class="text-xs bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full">sistema</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evento 5 - IA -->
+      <div class="px-4 py-3 border-b border-gray-50 flex gap-3">
+        <div class="flex flex-col items-center">
+          <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center shrink-0">
+            <ion-icon name="bulb-outline" class="text-purple-600 text-sm"></ion-icon>
+          </div>
+          <div class="w-0.5 flex-1 bg-gray-100 mt-1"></div>
+        </div>
+        <div class="flex-1 pb-1">
+          <div class="flex items-center justify-between mb-0.5">
+            <span class="text-sm font-medium text-gray-800">Patrón aprendido</span>
+            <span class="text-xs text-gray-400">12:55:48</span>
+          </div>
+          <div class="text-xs text-gray-400 mb-1.5">Nuevo patrón de evasión registrado con éxito</div>
+          <div class="flex gap-1.5">
+            <span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">IA</span>
+            <span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded-full">aprendizaje</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evento 6 -->
+      <div class="px-4 py-3 border-b border-gray-50 flex gap-3">
+        <div class="flex flex-col items-center">
+          <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+            <ion-icon name="navigate-outline" class="text-blue-600 text-sm"></ion-icon>
+          </div>
+          <div class="w-0.5 flex-1 bg-gray-100 mt-1"></div>
+        </div>
+        <div class="flex-1 pb-1">
+          <div class="flex items-center justify-between mb-0.5">
+            <span class="text-sm font-medium text-gray-800">Giro 20° derecha</span>
+            <span class="text-xs text-gray-400">12:54:30</span>
+          </div>
+          <div class="text-xs text-gray-400 mb-1.5">Ruta alternativa seleccionada por modelo</div>
+          <div class="flex gap-1.5">
+            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">movimiento</span>
+            <span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded-full">confianza: 88%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evento 7 - Conexión -->
+      <div class="px-4 py-3 flex gap-3">
+        <div class="flex flex-col items-center">
+          <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+            <ion-icon name="wifi-outline" class="text-green-600 text-sm"></ion-icon>
+          </div>
+        </div>
+        <div class="flex-1 pb-1">
+          <div class="flex items-center justify-between mb-0.5">
+            <span class="text-sm font-medium text-gray-800">Arduino conectado</span>
+            <span class="text-xs text-gray-400">12:45:00</span>
+          </div>
+          <div class="text-xs text-gray-400 mb-1.5">Dispositivo Arduino #1 conectado vía Bluetooth</div>
+          <div class="flex gap-1.5">
+            <span class="text-xs bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full">sistema</span>
+            <span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded-full">conexión</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Distribución de eventos -->
+    <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mt-4">
+      <h2 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <ion-icon name="stats-chart-outline"></ion-icon> Distribución por tipo
+      </h2>
+      <div class="space-y-3">
+        <div>
+          <div class="flex justify-between text-xs text-gray-500 mb-1">
+            <span class="flex items-center gap-1.5">
+              <span class="w-2 h-2 bg-blue-500 rounded-full"></span> Movimiento
+            </span>
+            <span class="font-medium text-gray-700">68%</span>
+          </div>
+          <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-blue-500 rounded-full" style="width:68%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between text-xs text-gray-500 mb-1">
+            <span class="flex items-center gap-1.5">
+              <span class="w-2 h-2 bg-purple-500 rounded-full"></span> IA
+            </span>
+            <span class="font-medium text-gray-700">15%</span>
+          </div>
+          <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-purple-500 rounded-full" style="width:15%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between text-xs text-gray-500 mb-1">
+            <span class="flex items-center gap-1.5">
+              <span class="w-2 h-2 bg-amber-500 rounded-full"></span> Sistema
+            </span>
+            <span class="font-medium text-gray-700">13%</span>
+          </div>
+          <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-amber-500 rounded-full" style="width:13%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between text-xs text-gray-500 mb-1">
+            <span class="flex items-center gap-1.5">
+              <span class="w-2 h-2 bg-red-500 rounded-full"></span> Alertas
+            </span>
+            <span class="font-medium text-gray-700">4%</span>
+          </div>
+          <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div class="h-full bg-red-500 rounded-full" style="width:4%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

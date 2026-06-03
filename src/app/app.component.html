@@ -1,3 +1,32 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content" when="lg">
+
+    <!-- Sidebar -->
+    <ion-menu contentId="main-content" type="overlay">
+      <ion-content class="bg-white">
+        <!-- Logo -->
+        <div class="flex items-center gap-2 px-4 py-5 border-b border-gray-100">
+          <ion-icon name="hardware-chip-outline" class="text-blue-600 text-2xl"></ion-icon>
+          <span class="font-semibold text-base text-gray-800">Arduino IA</span>
+        </div>
+
+        <!-- Nav items -->
+        <ion-list lines="none" class="mt-2">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of pages">
+            <ion-item [routerLink]="p.url" routerLinkActive="active-item" detail="false"
+              class="nav-item rounded-lg mx-2 my-0.5">
+              <ion-icon [name]="p.icon" slot="start" class="text-gray-400"></ion-icon>
+              <ion-label class="text-sm text-gray-600">{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <!-- Contenido principal -->
+    <div id="main-content" class="ion-page">
+      <ion-router-outlet></ion-router-outlet>
+    </div>
+
+  </ion-split-pane>
 </ion-app>
