@@ -1,33 +1,50 @@
 import { Routes } from '@angular/router';
+import { authGuard, noAuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./pages/login/login.page').then(m => m.LoginPage),
+    canActivate: [noAuthGuard],
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./pages/register/register.page').then(m => m.RegisterPage),
+    canActivate: [noAuthGuard],
   },
   {
     path: 'dashboard',
     loadComponent: () => import('./pages/dashboard/dashboard.page').then(m => m.DashboardPage),
+    canActivate: [authGuard],
   },
   {
     path: 'analisis',
     loadComponent: () => import('./pages/analisis/analisis.page').then(m => m.AnalisisPage),
+    canActivate: [authGuard],
   },
   {
     path: 'sesiones',
     loadComponent: () => import('./pages/sesiones/sesiones.page').then(m => m.SesionesPage),
+    canActivate: [authGuard],
   },
   {
     path: 'log-eventos',
     loadComponent: () => import('./pages/log-eventos/log-eventos.page').then(m => m.LogEventosPage),
+    canActivate: [authGuard],
   },
   {
     path: 'base-datos',
     loadComponent: () => import('./pages/base-datos/base-datos.page').then(m => m.BaseDatosPage),
+    canActivate: [authGuard],
   },
   {
     path: 'configuracion',
     loadComponent: () => import('./pages/configuracion/configuracion.page').then(m => m.ConfiguracionPage),
+    canActivate: [authGuard],
   },
 ];

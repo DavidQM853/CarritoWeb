@@ -1,0 +1,414 @@
+/* ─── Register Page – Premium Dark Glassmorphism ──────────────────────────── */
+
+:host {
+  --reg-primary: #8b5cf6;
+  --reg-primary-dark: #7c3aed;
+  --reg-primary-glow: rgba(139, 92, 246, 0.35);
+  --reg-bg-start: #0f172a;
+  --reg-bg-end: #1e293b;
+  --reg-card-bg: rgba(30, 41, 59, 0.7);
+  --reg-card-border: rgba(148, 163, 184, 0.12);
+  --reg-input-bg: rgba(15, 23, 42, 0.6);
+  --reg-input-border: rgba(148, 163, 184, 0.15);
+  --reg-input-focus: rgba(139, 92, 246, 0.4);
+  --reg-text: #f1f5f9;
+  --reg-text-muted: #94a3b8;
+  --reg-error: #f87171;
+  --reg-error-bg: rgba(248, 113, 113, 0.1);
+  --reg-success: #34d399;
+  --reg-success-bg: rgba(52, 211, 153, 0.1);
+}
+
+.register-content {
+  --background: linear-gradient(135deg, var(--reg-bg-start) 0%, #1a1035 50%, #0c1222 100%);
+}
+
+/* ─── Wrapper centrado ───────────────────────────────────────────────────── */
+
+.register-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── Partículas de fondo ────────────────────────────────────────────────── */
+
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  animation: float-particle 12s ease-in-out infinite;
+
+  &:nth-child(1) { width: 6px; height: 6px; background: var(--reg-primary); top: 12%; left: 8%; animation-delay: 0s; animation-duration: 10s; }
+  &:nth-child(2) { width: 4px; height: 4px; background: #c084fc; top: 22%; left: 88%; animation-delay: 2s; animation-duration: 14s; }
+  &:nth-child(3) { width: 8px; height: 8px; background: #22d3ee; top: 68%; left: 12%; animation-delay: 4s; animation-duration: 11s; }
+  &:nth-child(4) { width: 3px; height: 3px; background: #f472b6; top: 82%; left: 78%; animation-delay: 1s; animation-duration: 13s; }
+  &:nth-child(5) { width: 5px; height: 5px; background: var(--reg-primary); top: 42%; left: 92%; animation-delay: 3s; animation-duration: 9s; }
+  &:nth-child(6) { width: 7px; height: 7px; background: #34d399; top: 8%; left: 55%; animation-delay: 5s; animation-duration: 15s; }
+  &:nth-child(7) { width: 4px; height: 4px; background: #818cf8; top: 58%; left: 4%; animation-delay: 2.5s; animation-duration: 12s; }
+  &:nth-child(8) { width: 5px; height: 5px; background: #fbbf24; top: 92%; left: 42%; animation-delay: 6s; animation-duration: 10s; }
+}
+
+@keyframes float-particle {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  20% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.4;
+    transform: translateY(-80px) scale(1);
+  }
+  80% {
+    opacity: 0.6;
+  }
+}
+
+/* ─── Card ───────────────────────────────────────────────────────────────── */
+
+.register-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  background: var(--reg-card-bg);
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  border: 1px solid var(--reg-card-border);
+  border-radius: 24px;
+  padding: 36px 36px 28px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 80px var(--reg-primary-glow);
+  animation: card-enter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+@keyframes card-enter {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+
+.card-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.logo-ring {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--reg-primary), #c084fc);
+  padding: 3px;
+  animation: ring-pulse 3s ease-in-out infinite;
+}
+
+.logo-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--reg-bg-start);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon {
+    font-size: 30px;
+    color: var(--reg-primary);
+  }
+}
+
+@keyframes ring-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--reg-primary-glow); }
+  50% { box-shadow: 0 0 0 12px transparent; }
+}
+
+.app-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--reg-text);
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.title-accent {
+  background: linear-gradient(135deg, var(--reg-primary), #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.app-subtitle {
+  font-size: 14px;
+  color: var(--reg-text-muted);
+  margin: 6px 0 0;
+  font-weight: 400;
+}
+
+/* ─── Formulario ─────────────────────────────────────────────────────────── */
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.input-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--reg-text-muted);
+  padding-left: 2px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 18px;
+  color: var(--reg-text-muted);
+  transition: color 0.2s;
+  z-index: 1;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 13px 13px 13px 44px;
+  background: var(--reg-input-bg);
+  border: 1px solid var(--reg-input-border);
+  border-radius: 14px;
+  color: var(--reg-text);
+  font-size: 15px;
+  outline: none;
+  transition: all 0.25s ease;
+
+  &::placeholder {
+    color: rgba(148, 163, 184, 0.5);
+  }
+
+  &:focus {
+    border-color: var(--reg-primary);
+    box-shadow: 0 0 0 3px var(--reg-input-focus);
+    background: rgba(15, 23, 42, 0.8);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.input-wrapper:focus-within .input-icon {
+  color: var(--reg-primary);
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+
+  ion-icon {
+    font-size: 20px;
+    color: var(--reg-text-muted);
+    transition: color 0.2s;
+  }
+
+  &:hover ion-icon {
+    color: var(--reg-text);
+  }
+}
+
+/* ─── Banners ────────────────────────────────────────────────────────────── */
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--reg-error-bg);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  border-radius: 12px;
+  color: var(--reg-error);
+  font-size: 13px;
+  font-weight: 500;
+  animation: shake 0.4s ease-in-out;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.success-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--reg-success-bg);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  border-radius: 12px;
+  color: var(--reg-success);
+  font-size: 13px;
+  font-weight: 500;
+  animation: fade-in 0.4s ease;
+
+  ion-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-4px); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Botón registro ─────────────────────────────────────────────────────── */
+
+.btn-register {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 15px;
+  margin-top: 4px;
+  background: linear-gradient(135deg, var(--reg-primary), var(--reg-primary-dark));
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px var(--reg-primary-glow);
+
+    &::before { opacity: 1; }
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.btn-icon {
+  font-size: 20px;
+}
+
+.btn-spinner {
+  width: 20px;
+  height: 20px;
+  --color: white;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────────────── */
+
+.card-footer {
+  text-align: center;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--reg-card-border);
+
+  p {
+    font-size: 13px;
+    color: var(--reg-text-muted);
+    margin: 0;
+  }
+}
+
+.footer-link {
+  color: var(--reg-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-decoration: none;
+
+  &:hover {
+    color: #c084fc;
+    text-decoration: underline;
+  }
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .register-card {
+    padding: 28px 22px 24px;
+    border-radius: 20px;
+  }
+
+  .logo-ring {
+    width: 60px;
+    height: 60px;
+  }
+
+  .app-title {
+    font-size: 22px;
+  }
+}

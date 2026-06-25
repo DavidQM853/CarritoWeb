@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import {
   IonApp, IonRouterOutlet, IonSplitPane, IonMenu,
   IonContent, IonList, IonItem, IonIcon, IonLabel,
@@ -9,8 +9,12 @@ import { addIcons } from 'ionicons';
 import { CommonModule } from '@angular/common';
 import {
   gridOutline, analyticsOutline, timeOutline,
-  readerOutline, serverOutline, cogOutline, hardwareChipOutline
+  readerOutline, serverOutline, cogOutline, hardwareChipOutline,
+  logOutOutline
 } from 'ionicons/icons';
+import { filter } from 'rxjs/operators';
+
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -32,10 +36,29 @@ export class AppComponent {
     { title: 'Configuración', url: '/configuracion', icon: 'cog-outline' },
   ];
 
-  constructor() {
+  /** Ocultar sidebar en la página de login */
+  showSidebar = true;
+
+  constructor(
+    private router: Router,
+    public auth: AuthService
+  ) {
     addIcons({
       gridOutline, analyticsOutline, timeOutline,
-      readerOutline, serverOutline, cogOutline, hardwareChipOutline
+      readerOutline, serverOutline, cogOutline, hardwareChipOutline,
+      logOutOutline
     });
+
+    // Detectar si estamos en /login para ocultar el sidebar
+    this.router.events
+      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .subscribe(e => {
+        this.showSidebar = !e.urlAfterRedirects.startsWith('/login');
+      });
+  }
+
+  logout(): void {
+    this.auth.logout();
+    this.router.navigateByUrl('/login');
   }
 }
